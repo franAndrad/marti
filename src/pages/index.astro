@@ -2,7 +2,7 @@
 const icons = [
   '🥑', '🍎', '🥗', '🍓', '🥦', '🫐',
   '💊', '🩺', '🌹', '🌸', '💕', '❤️', '🌻', '🌷',
-  '👻', '🍕', '🎃', '🦇', '💘',
+  '👻', '🍕', '🎃', '🦇', '💘', '✨', '⭐', '👑',
 ];
 ---
 
@@ -19,6 +19,12 @@ const icons = [
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>
@@ -83,7 +89,7 @@ const icons = [
         const duration = 13 + Math.random() * 16;
         const delay = Math.random() * -24;
         const drift = (Math.random() - 0.5) * 160;
-        const maxOpacity = 0.3 + Math.random() * 0.22;
+        const maxOpacity = 0.4 + Math.random() * 0.35;
 
         el.style.left = `${startX}vw`;
         el.style.fontSize = `${size}rem`;
@@ -214,11 +220,14 @@ const icons = [
 
     <style>
       :root {
-        color-scheme: dark;
-        --bg-a: #120014;
-        --bg-b: #1a0b2e;
-        --accent: #ff2e63;
-        --accent-2: #08d9d6;
+        color-scheme: light;
+        --bg-a: #fdeaf3;
+        --bg-b: #f1e6fb;
+        --bg-c: #e3f7f4;
+        --ink: #5a4a63;
+        --rose: #b0577e;
+        --teal: #0e7490;
+        --gold: #d8b26a;
         --cream: #fff2e0;
       }
 
@@ -238,8 +247,8 @@ const icons = [
 
       body {
         min-height: 100vh;
-        font-family: 'Georgia', 'Times New Roman', serif;
-        color: var(--cream);
+        font-family: 'Cormorant Garamond', 'Georgia', serif;
+        color: var(--ink);
         overflow-x: hidden;
         position: relative;
       }
@@ -250,7 +259,7 @@ const icons = [
         left: 0;
         height: 3px;
         width: 100%;
-        background: linear-gradient(90deg, var(--accent-2), var(--accent));
+        background: linear-gradient(90deg, var(--teal), var(--rose));
         transform-origin: left;
         transform: scaleX(0);
         z-index: 100;
@@ -260,14 +269,18 @@ const icons = [
         position: fixed;
         inset: -10% 0;
         z-index: -2;
-        background: radial-gradient(circle at 20% 20%, #3a0d4d 0%, var(--bg-a) 45%, #05000a 100%);
+        background: linear-gradient(160deg, var(--bg-a) 0%, var(--bg-b) 45%, var(--bg-c) 100%);
       }
 
       .bg-layer::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: repeating-radial-gradient(circle at 80% 70%, rgba(8, 217, 214, 0.08) 0, transparent 6%);
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1.6px),
+          radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1.6px),
+          radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.5), transparent 55%);
+        background-size: 160px 160px, 100px 100px, 100% 100%;
+        background-position: 0 0, 48px 64px, 0 0;
       }
 
       .floaters {
@@ -282,7 +295,7 @@ const icons = [
         position: absolute;
         top: 0;
         will-change: transform, opacity;
-        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.35));
+        filter: drop-shadow(0 1px 3px rgba(90, 74, 99, 0.25));
       }
 
       main {
@@ -305,20 +318,21 @@ const icons = [
         letter-spacing: 0.3em;
         text-transform: uppercase;
         font-size: 0.75rem;
-        color: var(--accent-2);
+        color: var(--teal);
         margin: 0 0 1rem;
       }
 
       h1 {
+        font-family: 'Playfair Display', 'Georgia', serif;
         font-size: clamp(2rem, 6.5vw, 3.4rem);
         line-height: 1.15;
         margin: 0 0 1rem;
-        color: var(--accent-2);
-        text-shadow: 0 0 30px rgba(8, 217, 214, 0.4);
+        color: var(--rose);
+        text-shadow: 0 4px 24px rgba(176, 87, 126, 0.28);
       }
 
       .scene-sub {
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         opacity: 0.85;
         max-width: 480px;
         margin: 0.5rem auto 0;
@@ -414,6 +428,7 @@ const icons = [
         transform: translate(-50%, -50%);
         background: var(--cream);
         color: #241033;
+        font-family: 'Georgia', 'Times New Roman', serif;
         border-radius: 8px;
         padding: 1.85rem 1.6rem 1.6rem;
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
