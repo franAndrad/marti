@@ -1,8 +1,13 @@
 ---
 const icons = [
-  '🎃', '🔪', '👻', '🍕', '🍕', '🩺', '💊', '💉', '🌹', '🌸',
-  '🦇', '🍕', '🩹', '🌻', '🔪', '👻', '💊', '🌷', '🍕', '🎃',
+  '🎃', '🔪', '👻', '🍕', '💘', '🩺', '💊', '💉', '🌹', '🌸',
+  '🦇', '🍕', '🩹', '🌻', '💕', '👻', '💊', '🌷', '🍕', '❤️',
 ];
+
+const ecgPath =
+  'M0,50 H70 L90,18 L110,84 L130,50 H240 L260,12 L280,88 L300,50 ' +
+  'H410 L430,8 L450,92 L470,50 H580 L600,20 L620,80 L640,50 ' +
+  'H750 L770,4 L790,96 L810,50 H900';
 ---
 
 <!doctype html>
@@ -10,9 +15,15 @@ const icons = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Para Marti</title>
-    <meta name="description" content="Para Martina: terror, pizza, medicina y mucho cariño." />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌹</text></svg>" />
+    <title>Fran &amp; Marti</title>
+    <meta
+      name="description"
+      content="Un expediente de amor: terror, pizza, medicina y la promesa de que todo va a estar bien."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>"
+    />
   </head>
   <body>
     <div class="bg-layer"></div>
@@ -24,20 +35,68 @@ const icons = [
     </div>
 
     <main>
-      <section class="hero">
-        <p class="eyebrow" id="eyebrow">para vos, Marti</p>
-        <h1 id="title">
-          <span class="word">Terror.</span>
-          <span class="word">Pizza.</span>
-          <span class="word">Medicina.</span>
+      <section class="scene scene-intro" id="scene-intro">
+        <p class="tag" id="intro-tag">expediente confidencial · caso Fran &amp; Marti</p>
+        <h1 class="glitch" id="intro-title" data-text="ESTO NO ES UNA PELÍCULA DE TERROR">
+          ESTO NO ES UNA PELÍCULA DE TERROR
         </h1>
-        <p class="subtitle" id="subtitle">
-          la combinación más random del mundo, como la mezcla rara que sos vos y que amo.
+        <p class="scene-sub" id="intro-sub">
+          (aunque a veces se sienta así en época de parciales)
         </p>
+        <p class="scroll-cue" id="intro-cue">deslizá para el diagnóstico ↓</p>
+      </section>
 
-        <button id="reveal-btn" class="btn">tocá acá ✨</button>
+      <section class="scene scene-ecg" id="scene-ecg">
+        <p class="scene-label reveal">hallazgo clínico</p>
+        <h2 class="reveal">El pulso se acelera cada vez que te veo.</h2>
+        <div class="ecg-wrap reveal">
+          <svg class="ecg" viewBox="0 0 900 100" preserveAspectRatio="none">
+            <path id="ecg-path" d={ecgPath} />
+          </svg>
+          <span class="ecg-heart" id="ecg-heart">❤️</span>
+        </div>
+        <p class="scene-sub reveal">no hay tratamiento. no lo quiero.</p>
+      </section>
 
-        <div class="message" id="message">
+      <section class="scene scene-pizza" id="scene-pizza">
+        <p class="scene-label reveal">síntoma recurrente</p>
+        <h2 class="reveal">Pizza a la madrugada, viendo algo que da miedo.</h2>
+        <button class="pizza-box reveal" id="pizza-box" aria-label="Abrir la caja de pizza">
+          <span class="pizza-lid"></span>
+          <span class="pizza-base">
+            <span class="pizza">🍕</span>
+            <span class="pizza-note">sos mi combinación perfecta</span>
+          </span>
+        </button>
+        <p class="scene-sub reveal">(tocá la caja)</p>
+      </section>
+
+      <section class="scene scene-rx" id="scene-rx">
+        <div class="rx-card reveal">
+          <div class="rx-header">
+            <span class="rx-symbol">℞</span>
+            <div>
+              <p class="rx-title">Receta médica</p>
+              <p class="rx-sub">Dra. Martina — uso exclusivo de Fran</p>
+            </div>
+          </div>
+          <dl class="rx-body">
+            <dt>Paciente</dt>
+            <dd>Fran</dd>
+            <dt>Diagnóstico</dt>
+            <dd>enamorado de vos, sin cura conocida</dd>
+            <dt>Tratamiento</dt>
+            <dd>dosis diaria de mimos, risas y pelis clase B</dd>
+            <dt>Vigencia</dt>
+            <dd>para siempre</dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="scene scene-final" id="scene-final">
+        <p class="tag reveal">para vos, Marti</p>
+        <h2 class="final-title reveal">Todo va a estar bien.</h2>
+        <div class="message reveal">
           <p>
             Sé que a veces el estudio, los parciales y el cansancio pesan mucho.
             Pero quiero que sepas algo, aunque parezca la trama de una peli de terror
@@ -50,12 +109,17 @@ const icons = [
           </p>
           <p class="signature">Te amo, Marti. — Fran 🖤🍕🩺</p>
         </div>
+        <button id="reveal-btn" class="btn reveal">un beso más 💋</button>
       </section>
     </main>
 
     <script>
       import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+      gsap.registerPlugin(ScrollTrigger);
+
+      // --- floating ambient icons ---
       const floaters = document.querySelectorAll<HTMLElement>('.floater');
 
       floaters.forEach((el) => {
@@ -92,37 +156,72 @@ const icons = [
         });
       });
 
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      // --- intro entrance ---
+      const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.from('#eyebrow', { y: -20, opacity: 0, duration: 0.6 })
-        .from(
-          '.word',
-          {
-            y: 40,
-            opacity: 0,
-            rotation: -4,
-            duration: 0.8,
-            stagger: 0.15,
-          },
-          '-=0.2'
-        )
-        .from('#subtitle', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3')
-        .from('#reveal-btn', { scale: 0.6, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.2');
+      introTl
+        .from('#intro-tag', { y: -20, opacity: 0, duration: 0.6 })
+        .from('#intro-title', { y: 30, opacity: 0, duration: 0.9 }, '-=0.2')
+        .from('#intro-sub', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3')
+        .from('#intro-cue', { opacity: 0, duration: 0.6 }, '-=0.2');
 
-      gsap.to('#reveal-btn', {
-        scale: 1.06,
-        duration: 0.9,
+      gsap.to('#intro-cue', {
+        y: 8,
+        duration: 1,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       });
 
-      const message = document.getElementById('message');
+      // --- generic scroll reveal for later scenes ---
+      gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+        gsap.from(el, {
+          y: 40,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      });
+
+      // --- heartbeat monitor tied to scroll ---
+      const ecgPath = document.getElementById('ecg-path') as unknown as SVGPathElement | null;
+      const ecgHeart = document.getElementById('ecg-heart');
+
+      if (ecgPath) {
+        const len = ecgPath.getTotalLength();
+        gsap.set(ecgPath, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.set(ecgHeart, { scale: 0, opacity: 0 });
+
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: '#scene-ecg',
+              start: 'top 70%',
+              end: 'bottom 50%',
+              scrub: 0.4,
+            },
+          })
+          .to(ecgPath, { strokeDashoffset: 0, ease: 'none' })
+          .to(ecgHeart, { scale: 1.5, opacity: 1, ease: 'power2.out' }, '-=0.15')
+          .to(ecgHeart, { scale: 1.2, duration: 0.3, ease: 'power1.inOut' });
+      }
+
+      // --- pizza box interaction ---
+      const pizzaBox = document.getElementById('pizza-box');
+      pizzaBox?.addEventListener('click', () => {
+        pizzaBox.classList.toggle('open');
+      });
+
+      // --- final scene: kiss burst ---
       const btn = document.getElementById('reveal-btn');
-      let revealed = false;
 
       function burst() {
-        const emojis = ['❤️', '🌹', '🌸', '💊', '🍕'];
+        const emojis = ['❤️', '💋', '🌹', '🌸', '💊', '🍕'];
         for (let i = 0; i < 24; i++) {
           const span = document.createElement('span');
           span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -130,7 +229,7 @@ const icons = [
           document.body.appendChild(span);
 
           const x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
-          const y = window.innerHeight * 0.35;
+          const y = window.innerHeight * 0.6;
           gsap.set(span, { position: 'fixed', left: x, top: y, fontSize: '1.5rem', zIndex: 50 });
 
           gsap.to(span, {
@@ -145,28 +244,7 @@ const icons = [
         }
       }
 
-      btn?.addEventListener('click', () => {
-        burst();
-        if (revealed || !message) return;
-        revealed = true;
-        gsap.set(message, { display: 'block', height: 'auto' });
-        gsap.from(message, { height: 0, opacity: 0, duration: 0.6, ease: 'power2.out' });
-        gsap.from(message.querySelectorAll('p'), {
-          y: 20,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.15,
-          delay: 0.1,
-        });
-        btn.textContent = 'de nuevo 🎉';
-        message.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        gsap.to('.hero', { x, y, duration: 1.2, ease: 'power2.out' });
-      });
+      btn?.addEventListener('click', burst);
     </script>
 
     <style>
@@ -187,6 +265,10 @@ const icons = [
       body {
         margin: 0;
         height: 100%;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -227,80 +309,288 @@ const icons = [
       }
 
       main {
+        position: relative;
+      }
+
+      .scene {
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 2.5rem 1.25rem;
-      }
-
-      .hero {
-        max-width: 640px;
         text-align: center;
+        padding: 4rem 1.25rem;
+        max-width: 720px;
+        margin: 0 auto;
       }
 
-      .eyebrow {
+      .tag,
+      .scene-label {
         letter-spacing: 0.3em;
         text-transform: uppercase;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--accent-2);
         margin: 0 0 1rem;
       }
 
-      h1 {
-        font-size: clamp(2.2rem, 7vw, 4rem);
+      h1,
+      .scene h2 {
+        font-size: clamp(1.9rem, 6.5vw, 3.4rem);
+        line-height: 1.15;
         margin: 0 0 1rem;
-        line-height: 1.1;
       }
 
-      .word {
-        display: inline-block;
-        margin: 0 0.15em;
+      .scene-sub {
+        font-size: 1.05rem;
+        opacity: 0.85;
+        max-width: 480px;
+        margin: 0.5rem auto 0;
       }
 
-      .word:nth-child(1) {
+      /* intro */
+
+      .scene-intro h1 {
         color: var(--accent);
-        text-shadow: 0 0 24px rgba(255, 46, 99, 0.5);
+        text-shadow: 0 0 30px rgba(255, 46, 99, 0.45);
       }
 
-      .word:nth-child(2) {
-        color: #ffb238;
-        text-shadow: 0 0 24px rgba(255, 178, 56, 0.4);
+      .glitch {
+        position: relative;
       }
 
-      .word:nth-child(3) {
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        background: transparent;
+      }
+
+      .glitch::before {
+        left: 3px;
+        color: var(--accent-2);
+        text-shadow: -2px 0 var(--accent-2);
+        animation: glitch-1 3.4s infinite linear alternate-reverse;
+      }
+
+      .glitch::after {
+        left: -3px;
+        color: var(--accent);
+        text-shadow: 2px 0 #ffb238;
+        animation: glitch-2 2.8s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-1 {
+        0% {
+          clip-path: inset(10% 0 60% 0);
+        }
+        20% {
+          clip-path: inset(80% 0 2% 0);
+        }
+        40% {
+          clip-path: inset(40% 0 40% 0);
+        }
+        60% {
+          clip-path: inset(10% 0 75% 0);
+        }
+        80% {
+          clip-path: inset(60% 0 15% 0);
+        }
+        100% {
+          clip-path: inset(20% 0 55% 0);
+        }
+      }
+
+      @keyframes glitch-2 {
+        0% {
+          clip-path: inset(70% 0 5% 0);
+        }
+        25% {
+          clip-path: inset(15% 0 65% 0);
+        }
+        50% {
+          clip-path: inset(45% 0 35% 0);
+        }
+        75% {
+          clip-path: inset(5% 0 80% 0);
+        }
+        100% {
+          clip-path: inset(55% 0 20% 0);
+        }
+      }
+
+      .scroll-cue {
+        margin-top: 2.5rem;
+        font-size: 0.85rem;
+        opacity: 0.6;
+        letter-spacing: 0.1em;
+      }
+
+      /* ecg */
+
+      .ecg-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 560px;
+        margin: 1.5rem auto;
+      }
+
+      .ecg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .ecg path {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 0 8px rgba(255, 46, 99, 0.6));
+      }
+
+      .ecg-heart {
+        position: absolute;
+        right: -0.4rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+      }
+
+      /* pizza */
+
+      .pizza-box {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        margin: 2rem auto 0.5rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        perspective: 900px;
+      }
+
+      .pizza-lid {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #d9a256, #8a5a24);
+        border-radius: 10px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+        transform-origin: top center;
+        transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        z-index: 2;
+      }
+
+      .pizza-base {
+        position: absolute;
+        inset: 6px;
+        background: #3a2412;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        overflow: hidden;
+      }
+
+      .pizza {
+        font-size: 4rem;
+        transform: scale(0);
+        transition: transform 0.5s ease 0.2s;
+      }
+
+      .pizza-note {
+        opacity: 0;
+        font-size: 0.9rem;
+        max-width: 170px;
+        text-align: center;
+        color: var(--cream);
+        transition: opacity 0.5s ease 0.35s;
+      }
+
+      .pizza-box.open .pizza-lid {
+        transform: rotateX(-118deg) translateY(-6px);
+      }
+
+      .pizza-box.open .pizza {
+        transform: scale(1);
+      }
+
+      .pizza-box.open .pizza-note {
+        opacity: 1;
+      }
+
+      /* rx card */
+
+      .rx-card {
+        background: var(--cream);
+        color: #241033;
+        border-radius: 14px;
+        padding: 1.75rem 2rem;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+        transform: rotate(-2deg);
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+      }
+
+      .rx-header {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        border-bottom: 2px dashed rgba(36, 16, 51, 0.35);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .rx-symbol {
+        font-size: 2.4rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+
+      .rx-title {
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.05rem;
+      }
+
+      .rx-sub {
+        margin: 0;
+        font-size: 0.78rem;
+        opacity: 0.7;
+      }
+
+      .rx-body {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem 1rem;
+        font-size: 0.92rem;
+        margin: 0;
+      }
+
+      .rx-body dt {
+        font-weight: bold;
+        opacity: 0.65;
+      }
+
+      .rx-body dd {
+        margin: 0;
+      }
+
+      /* final */
+
+      .final-title {
         color: var(--accent-2);
         text-shadow: 0 0 24px rgba(8, 217, 214, 0.4);
       }
 
-      .subtitle {
-        font-size: 1.1rem;
-        opacity: 0.85;
-        max-width: 480px;
-        margin: 0 auto 2rem;
-      }
-
-      .btn {
-        font-family: inherit;
-        font-size: 1.05rem;
-        padding: 0.85rem 2rem;
-        border-radius: 999px;
-        border: 2px solid var(--accent);
-        background: rgba(255, 46, 99, 0.12);
-        color: var(--cream);
-        cursor: pointer;
-        transition: background 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 0 20px rgba(255, 46, 99, 0.25);
-      }
-
-      .btn:hover {
-        background: rgba(255, 46, 99, 0.28);
-        box-shadow: 0 0 32px rgba(255, 46, 99, 0.45);
-      }
-
       .message {
-        display: none;
-        margin-top: 2.5rem;
+        margin-top: 1.5rem;
         text-align: left;
         background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.12);
@@ -321,9 +611,41 @@ const icons = [
         color: var(--accent-2);
       }
 
+      .btn {
+        font-family: inherit;
+        font-size: 1.05rem;
+        padding: 0.85rem 2rem;
+        border-radius: 999px;
+        border: 2px solid var(--accent);
+        background: rgba(255, 46, 99, 0.12);
+        color: var(--cream);
+        cursor: pointer;
+        margin-top: 2rem;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 0 20px rgba(255, 46, 99, 0.25);
+      }
+
+      .btn:hover {
+        background: rgba(255, 46, 99, 0.28);
+        box-shadow: 0 0 32px rgba(255, 46, 99, 0.45);
+      }
+
       @media (max-width: 480px) {
+        .scene {
+          padding: 3rem 1rem;
+        }
+
         .message {
           padding: 1.25rem 1.25rem;
+        }
+
+        .pizza-box {
+          width: 180px;
+          height: 180px;
+        }
+
+        .rx-card {
+          padding: 1.5rem 1.5rem;
         }
       }
     </style>
