@@ -1,13 +1,23 @@
 ---
 const icons = [
-  '🎃', '🔪', '👻', '🍕', '💘', '🩺', '💊', '💉', '🌹', '🌸',
-  '🦇', '🍕', '🩹', '🌻', '💕', '👻', '💊', '🌷', '🍕', '❤️',
+  '🥑', '🍎', '🥗', '🍓', '🥦', '🫐', '🍊', '🥕',
+  '💊', '🩺', '🌹', '🌸', '💕', '❤️', '🌻', '🌷',
+  '👻', '🍕', '🔪', '🦇',
 ];
 
 const ecgPath =
   'M0,50 H70 L90,18 L110,84 L130,50 H240 L260,12 L280,88 L300,50 ' +
   'H410 L430,8 L450,92 L470,50 H580 L600,20 L620,80 L640,50 ' +
   'H750 L770,4 L790,96 L810,50 H900';
+
+const growthPath = 'M100,600 L100,20';
+
+const leaves = [
+  { id: 'leaf-1', top: '84%', icon: '🥑', label: 'hoy: nutrición, mil recetas y poca plata' },
+  { id: 'leaf-2', top: '64%', icon: '🥗', label: 'prácticas, informes, trasnochadas' },
+  { id: 'leaf-3', top: '44%', icon: '🍎', label: 'constancia, todos los días' },
+  { id: 'leaf-4', top: '24%', icon: '🌱', label: 'cada vez más cerca' },
+];
 ---
 
 <!doctype html>
@@ -18,7 +28,7 @@ const ecgPath =
     <title>Fran &amp; Marti</title>
     <meta
       name="description"
-      content="Un expediente de amor: terror, pizza, medicina y la promesa de que todo va a estar bien."
+      content="Para Martina: estudia nutrición, sueña con ser médica, y mientras tanto se ganó todo mi corazón."
     />
     <link
       rel="icon"
@@ -26,7 +36,8 @@ const ecgPath =
     />
   </head>
   <body>
-    <div class="bg-layer"></div>
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="bg-layer" id="bg-layer"></div>
 
     <div class="floaters" id="floaters" aria-hidden="true">
       {icons.map((icon) => (
@@ -37,13 +48,11 @@ const ecgPath =
     <main>
       <section class="scene scene-intro" id="scene-intro">
         <p class="tag" id="intro-tag">expediente confidencial · caso Fran &amp; Marti</p>
-        <h1 class="glitch" id="intro-title" data-text="ESTO NO ES UNA PELÍCULA DE TERROR">
-          ESTO NO ES UNA PELÍCULA DE TERROR
+        <h1 class="glitch" id="intro-title" data-text="TODAVÍA NO ES DOCTORA">
+          TODAVÍA NO ES DOCTORA
         </h1>
-        <p class="scene-sub" id="intro-sub">
-          (aunque a veces se sienta así en época de parciales)
-        </p>
-        <p class="scroll-cue" id="intro-cue">deslizá para el diagnóstico ↓</p>
+        <p class="scene-sub" id="intro-sub">pero ya me salvó a mí, hace rato.</p>
+        <p class="scroll-cue" id="intro-cue">deslizá ↓</p>
       </section>
 
       <section class="scene scene-ecg" id="scene-ecg">
@@ -58,38 +67,29 @@ const ecgPath =
         <p class="scene-sub reveal">no hay tratamiento. no lo quiero.</p>
       </section>
 
-      <section class="scene scene-pizza" id="scene-pizza">
-        <p class="scene-label reveal">síntoma recurrente</p>
-        <h2 class="reveal">Pizza a la madrugada, viendo algo que da miedo.</h2>
-        <button class="pizza-box reveal" id="pizza-box" aria-label="Abrir la caja de pizza">
-          <span class="pizza-lid"></span>
-          <span class="pizza-base">
-            <span class="pizza">🍕</span>
-            <span class="pizza-note">sos mi combinación perfecta</span>
-          </span>
-        </button>
-        <p class="scene-sub reveal">(tocá la caja)</p>
-      </section>
+      <section class="scene scene-growth" id="scene-growth">
+        <p class="scene-label reveal">camino recorrido</p>
+        <h2 class="reveal">De la nutrición a la bata blanca, paso a paso.</h2>
+        <div class="growth-wrap" id="growth-wrap">
+          <svg class="growth-svg" viewBox="0 0 200 620" preserveAspectRatio="xMidYMid meet">
+            <path id="growth-path" d={growthPath} />
+          </svg>
 
-      <section class="scene scene-rx" id="scene-rx">
-        <div class="rx-card reveal">
-          <div class="rx-header">
-            <span class="rx-symbol">℞</span>
-            <div>
-              <p class="rx-title">Receta médica</p>
-              <p class="rx-sub">Dra. Martina — uso exclusivo de Fran</p>
+          {leaves.map((leaf) => (
+            <div class="leaf" id={leaf.id} style={`top:${leaf.top}`}>
+              <span class="leaf-inner">
+                <span class="leaf-icon">{leaf.icon}</span>
+                <span class="leaf-label">{leaf.label}</span>
+              </span>
             </div>
+          ))}
+
+          <div class="leaf leaf-blossom" id="leaf-5" style="top:8%">
+            <span class="leaf-inner">
+              <span class="leaf-icon">🩺</span>
+              <span class="leaf-label">mañana: Dra. Martina</span>
+            </span>
           </div>
-          <dl class="rx-body">
-            <dt>Paciente</dt>
-            <dd>Fran</dd>
-            <dt>Diagnóstico</dt>
-            <dd>enamorado de vos, sin cura conocida</dd>
-            <dt>Tratamiento</dt>
-            <dd>dosis diaria de mimos, risas y pelis clase B</dd>
-            <dt>Vigencia</dt>
-            <dd>para siempre</dd>
-          </dl>
         </div>
       </section>
 
@@ -98,16 +98,16 @@ const ecgPath =
         <h2 class="final-title reveal">Todo va a estar bien.</h2>
         <div class="message reveal">
           <p>
-            Sé que a veces el estudio, los parciales y el cansancio pesan mucho.
-            Pero quiero que sepas algo, aunque parezca la trama de una peli de terror
-            mala: <strong>todo va a estar bien.</strong>
+            Sé que estudiar no es fácil: anatomía, bioquímica, prácticas que se comen
+            los fines de semana. Y sé que tu sueño real —ser médica— todavía te queda
+            camino por recorrer. Pero quiero que sepas algo: <strong>vas a llegar</strong>,
+            un paso a la vez.
           </p>
           <p>
-            Vas a recibirte, vas a curar gente, y en el medio vamos a seguir
-            viendo pelis que dan miedo, comiendo pizza a la madrugada y
-            riéndonos de todo. Yo estoy acá, para lo que necesites.
+            Y mientras tanto, acá estoy yo: para los mates de las 2 AM estudiando, para
+            escucharte repasar en voz alta, para lo que necesites.
           </p>
-          <p class="signature">Te amo, Marti. — Fran 🖤🍕🩺</p>
+          <p class="signature">Te amo, Marti. — Fran 🖤🩺</p>
         </div>
         <button id="reveal-btn" class="btn reveal">un beso más 💋</button>
       </section>
@@ -119,15 +119,16 @@ const ecgPath =
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // --- floating ambient icons ---
+      // --- floating ambient icons (kept subtle: texture, not focus) ---
       const floaters = document.querySelectorAll<HTMLElement>('.floater');
 
       floaters.forEach((el) => {
         const startX = Math.random() * 100;
-        const size = 1.2 + Math.random() * 1.8;
-        const duration = 10 + Math.random() * 14;
-        const delay = Math.random() * -20;
-        const drift = (Math.random() - 0.5) * 200;
+        const size = 1 + Math.random() * 1.4;
+        const duration = 12 + Math.random() * 16;
+        const delay = Math.random() * -24;
+        const drift = (Math.random() - 0.5) * 180;
+        const maxOpacity = 0.35 + Math.random() * 0.25;
 
         el.style.left = `${startX}vw`;
         el.style.fontSize = `${size}rem`;
@@ -137,7 +138,7 @@ const ecgPath =
         gsap.to(el, {
           y: '-10vh',
           x: `+=${drift}`,
-          opacity: 1,
+          opacity: maxOpacity,
           duration,
           delay,
           repeat: -1,
@@ -148,12 +149,27 @@ const ecgPath =
         });
 
         gsap.to(el, {
-          rotation: (Math.random() - 0.5) * 60,
-          duration: 3 + Math.random() * 3,
+          rotation: (Math.random() - 0.5) * 50,
+          duration: 4 + Math.random() * 3,
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut',
         });
+      });
+
+      // --- scroll progress bar + background parallax ---
+      ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: (self) => {
+          gsap.set('#progress-bar', { scaleX: self.progress });
+        },
+      });
+
+      gsap.to('#bg-layer', {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: { start: 0, end: 'max', scrub: true },
       });
 
       // --- intro entrance ---
@@ -189,12 +205,12 @@ const ecgPath =
       });
 
       // --- heartbeat monitor tied to scroll ---
-      const ecgPath = document.getElementById('ecg-path') as unknown as SVGPathElement | null;
+      const ecgPathEl = document.getElementById('ecg-path') as unknown as SVGPathElement | null;
       const ecgHeart = document.getElementById('ecg-heart');
 
-      if (ecgPath) {
-        const len = ecgPath.getTotalLength();
-        gsap.set(ecgPath, { strokeDasharray: len, strokeDashoffset: len });
+      if (ecgPathEl) {
+        const len = ecgPathEl.getTotalLength();
+        gsap.set(ecgPathEl, { strokeDasharray: len, strokeDashoffset: len });
         gsap.set(ecgHeart, { scale: 0, opacity: 0 });
 
         gsap
@@ -206,22 +222,54 @@ const ecgPath =
               scrub: 0.4,
             },
           })
-          .to(ecgPath, { strokeDashoffset: 0, ease: 'none' })
+          .to(ecgPathEl, { strokeDashoffset: 0, ease: 'none' })
           .to(ecgHeart, { scale: 1.5, opacity: 1, ease: 'power2.out' }, '-=0.15')
           .to(ecgHeart, { scale: 1.2, duration: 0.3, ease: 'power1.inOut' });
       }
 
-      // --- pizza box interaction ---
-      const pizzaBox = document.getElementById('pizza-box');
-      pizzaBox?.addEventListener('click', () => {
-        pizzaBox.classList.toggle('open');
-      });
+      // --- growth path: nutrición -> Dra. Martina, pinned scrollytelling ---
+      const growthPathEl = document.getElementById('growth-path') as unknown as SVGPathElement | null;
+
+      gsap.set('.leaf-inner', { opacity: 0, scale: 0.4 });
+
+      if (growthPathEl) {
+        const glen = growthPathEl.getTotalLength();
+        gsap.set(growthPathEl, { strokeDasharray: glen, strokeDashoffset: glen });
+
+        const growthTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#scene-growth',
+            start: 'top top',
+            end: '+=140%',
+            scrub: 0.6,
+            pin: true,
+          },
+        });
+
+        growthTl.to(growthPathEl, { strokeDashoffset: 0, duration: 1, ease: 'none' });
+
+        const leafSteps: Array<[string, number]> = [
+          ['#leaf-1 .leaf-inner', 0.08],
+          ['#leaf-2 .leaf-inner', 0.32],
+          ['#leaf-3 .leaf-inner', 0.54],
+          ['#leaf-4 .leaf-inner', 0.76],
+          ['#leaf-5 .leaf-inner', 0.94],
+        ];
+
+        leafSteps.forEach(([selector, pos]) => {
+          growthTl.to(
+            selector,
+            { opacity: 1, scale: 1, duration: 0.1, ease: 'back.out(2)' },
+            pos
+          );
+        });
+      }
 
       // --- final scene: kiss burst ---
       const btn = document.getElementById('reveal-btn');
 
       function burst() {
-        const emojis = ['❤️', '💋', '🌹', '🌸', '💊', '🍕'];
+        const emojis = ['❤️', '💋', '🌹', '🌸', '💕'];
         for (let i = 0; i < 24; i++) {
           const span = document.createElement('span');
           span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -279,9 +327,21 @@ const ecgPath =
         position: relative;
       }
 
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transform-origin: left;
+        transform: scaleX(0);
+        z-index: 100;
+      }
+
       .bg-layer {
         position: fixed;
-        inset: 0;
+        inset: -10% 0;
         z-index: -2;
         background: radial-gradient(circle at 20% 20%, #3a0d4d 0%, var(--bg-a) 45%, #05000a 100%);
       }
@@ -305,7 +365,7 @@ const ecgPath =
         position: absolute;
         top: 0;
         will-change: transform, opacity;
-        filter: drop-shadow(0 0 6px rgba(255, 46, 99, 0.25));
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.35));
       }
 
       main {
@@ -458,128 +518,80 @@ const ecgPath =
         font-size: 2rem;
       }
 
-      /* pizza */
+      /* growth */
 
-      .pizza-box {
+      .scene-growth {
+        max-width: 100%;
+      }
+
+      .growth-wrap {
         position: relative;
-        width: 220px;
-        height: 220px;
-        margin: 2rem auto 0.5rem;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        perspective: 900px;
+        width: min(260px, 70vw);
+        aspect-ratio: 200 / 620;
+        margin: 1rem auto 0;
       }
 
-      .pizza-lid {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, #d9a256, #8a5a24);
-        border-radius: 10px;
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
-        transform-origin: top center;
-        transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-        z-index: 2;
-      }
-
-      .pizza-base {
-        position: absolute;
-        inset: 6px;
-        background: #3a2412;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.6rem;
-        overflow: hidden;
-      }
-
-      .pizza {
-        font-size: 4rem;
-        transform: scale(0);
-        transition: transform 0.5s ease 0.2s;
-      }
-
-      .pizza-note {
-        opacity: 0;
-        font-size: 0.9rem;
-        max-width: 170px;
-        text-align: center;
-        color: var(--cream);
-        transition: opacity 0.5s ease 0.35s;
-      }
-
-      .pizza-box.open .pizza-lid {
-        transform: rotateX(-118deg) translateY(-6px);
-      }
-
-      .pizza-box.open .pizza {
-        transform: scale(1);
-      }
-
-      .pizza-box.open .pizza-note {
-        opacity: 1;
-      }
-
-      /* rx card */
-
-      .rx-card {
-        background: var(--cream);
-        color: #241033;
-        border-radius: 14px;
-        padding: 1.75rem 2rem;
-        max-width: 420px;
+      .growth-svg {
         width: 100%;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-        transform: rotate(-2deg);
-        font-family: 'Courier New', Courier, monospace;
-        text-align: left;
+        height: 100%;
+        display: block;
+        overflow: visible;
       }
 
-      .rx-header {
+      .growth-svg path {
+        fill: none;
+        stroke: var(--accent-2);
+        stroke-width: 3;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 6px rgba(8, 217, 214, 0.45));
+      }
+
+      .leaf {
+        position: absolute;
+        left: 50%;
+        transform: translate(14px, -50%);
+      }
+
+      .leaf-inner {
         display: flex;
-        gap: 1rem;
         align-items: center;
-        border-bottom: 2px dashed rgba(36, 16, 51, 0.35);
-        padding-bottom: 1rem;
-        margin-bottom: 1rem;
+        gap: 0.6rem;
+        white-space: nowrap;
       }
 
-      .rx-symbol {
-        font-size: 2.4rem;
-        color: var(--accent);
+      .leaf-icon {
+        font-size: 1.6rem;
         line-height: 1;
       }
 
-      .rx-title {
-        margin: 0;
+      .leaf-label {
+        font-size: 0.8rem;
+        opacity: 0.85;
+        max-width: 190px;
+        white-space: normal;
+        text-align: left;
+      }
+
+      .leaf-blossom {
+        transform: translate(-50%, -50%);
+      }
+
+      .leaf-blossom .leaf-inner {
+        flex-direction: column;
+        gap: 0.3rem;
+        white-space: normal;
+      }
+
+      .leaf-blossom .leaf-icon {
+        font-size: 2.6rem;
+        filter: drop-shadow(0 0 12px rgba(255, 46, 99, 0.5));
+      }
+
+      .leaf-blossom .leaf-label {
+        color: var(--accent-2);
         font-weight: bold;
-        font-size: 1.05rem;
-      }
-
-      .rx-sub {
-        margin: 0;
-        font-size: 0.78rem;
-        opacity: 0.7;
-      }
-
-      .rx-body {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.5rem 1rem;
-        font-size: 0.92rem;
-        margin: 0;
-      }
-
-      .rx-body dt {
-        font-weight: bold;
-        opacity: 0.65;
-      }
-
-      .rx-body dd {
-        margin: 0;
+        text-align: center;
+        white-space: nowrap;
       }
 
       /* final */
@@ -639,13 +651,12 @@ const ecgPath =
           padding: 1.25rem 1.25rem;
         }
 
-        .pizza-box {
-          width: 180px;
-          height: 180px;
+        .growth-wrap {
+          width: min(220px, 78vw);
         }
 
-        .rx-card {
-          padding: 1.5rem 1.5rem;
+        .leaf-label {
+          max-width: 140px;
         }
       }
     </style>
