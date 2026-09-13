@@ -1,22 +1,8 @@
 ---
 const icons = [
-  '🥑', '🍎', '🥗', '🍓', '🥦', '🫐', '🍊', '🥕',
+  '🥑', '🍎', '🥗', '🍓', '🥦', '🫐',
   '💊', '🩺', '🌹', '🌸', '💕', '❤️', '🌻', '🌷',
-  '👻', '🍕', '🔪', '🦇',
-];
-
-const ecgPath =
-  'M0,50 H70 L90,18 L110,84 L130,50 H240 L260,12 L280,88 L300,50 ' +
-  'H410 L430,8 L450,92 L470,50 H580 L600,20 L620,80 L640,50 ' +
-  'H750 L770,4 L790,96 L810,50 H900';
-
-const growthPath = 'M100,600 L100,20';
-
-const leaves = [
-  { id: 'leaf-1', top: '84%', icon: '🥑', label: 'hoy: nutrición, mil recetas y poca plata' },
-  { id: 'leaf-2', top: '64%', icon: '🥗', label: 'prácticas, informes, trasnochadas' },
-  { id: 'leaf-3', top: '44%', icon: '🍎', label: 'constancia, todos los días' },
-  { id: 'leaf-4', top: '24%', icon: '🌱', label: 'cada vez más cerca' },
+  '👻', '🍕', '🎃', '🦇', '💘',
 ];
 ---
 
@@ -28,7 +14,7 @@ const leaves = [
     <title>Fran &amp; Marti</title>
     <meta
       name="description"
-      content="Para Martina: estudia nutrición, sueña con ser médica, y mientras tanto se ganó todo mi corazón."
+      content="Para Martina: una carta para decirle que todo va a estar bien y que la amo."
     />
     <link
       rel="icon"
@@ -47,69 +33,38 @@ const leaves = [
 
     <main>
       <section class="scene scene-intro" id="scene-intro">
-        <p class="tag" id="intro-tag">expediente confidencial · caso Fran &amp; Marti</p>
-        <h1 class="glitch" id="intro-title" data-text="TODAVÍA NO ES DOCTORA">
-          TODAVÍA NO ES DOCTORA
-        </h1>
-        <p class="scene-sub" id="intro-sub">pero ya me salvó a mí, hace rato.</p>
-        <p class="scroll-cue" id="intro-cue">deslizá ↓</p>
+        <p class="tag" id="intro-tag">para vos, Marti</p>
+        <h1 id="intro-title">Pará un segundo.</h1>
+        <p class="scene-sub" id="intro-sub">tengo algo para vos.</p>
+        <p class="scroll-cue" id="intro-cue">deslizá despacito ↓</p>
       </section>
 
-      <section class="scene scene-ecg" id="scene-ecg">
-        <p class="scene-label reveal">hallazgo clínico</p>
-        <h2 class="reveal">El pulso se acelera cada vez que te veo.</h2>
-        <div class="ecg-wrap reveal">
-          <svg class="ecg" viewBox="0 0 900 100" preserveAspectRatio="none">
-            <path id="ecg-path" d={ecgPath} />
-          </svg>
-          <span class="ecg-heart" id="ecg-heart">❤️</span>
-        </div>
-        <p class="scene-sub reveal">no hay tratamiento. no lo quiero.</p>
-      </section>
-
-      <section class="scene scene-growth" id="scene-growth">
-        <p class="scene-label reveal">camino recorrido</p>
-        <h2 class="reveal">De la nutrición a la bata blanca, paso a paso.</h2>
-        <div class="growth-wrap" id="growth-wrap">
-          <svg class="growth-svg" viewBox="0 0 200 620" preserveAspectRatio="xMidYMid meet">
-            <path id="growth-path" d={growthPath} />
-          </svg>
-
-          {leaves.map((leaf) => (
-            <div class="leaf" id={leaf.id} style={`top:${leaf.top}`}>
-              <span class="leaf-inner">
-                <span class="leaf-icon">{leaf.icon}</span>
-                <span class="leaf-label">{leaf.label}</span>
-              </span>
+      <section class="scene scene-box" id="scene-box">
+        <div class="gift-wrap" id="gift-wrap">
+          <div class="letter" id="letter">
+            <p class="letter-heart">🖤</p>
+            <p>Marti,</p>
+            <p>Sé que últimamente los días vienen un poco pesados.</p>
+            <p>Quiero que lo tengas clarísimo:</p>
+            <p class="highlight">todo va a estar bien.</p>
+            <p>No hace falta que sea hoy, ni que sea perfecto. Yo voy a estar acá, pase lo que pase.</p>
+            <p class="closing">Te amo, hoy y siempre.</p>
+            <p class="sign">— Fran</p>
+            <div class="btn-wrap">
+              <button id="reveal-btn" class="btn">un beso más 💋</button>
             </div>
-          ))}
+          </div>
 
-          <div class="leaf leaf-blossom" id="leaf-5" style="top:8%">
-            <span class="leaf-inner">
-              <span class="leaf-icon">🩺</span>
-              <span class="leaf-label">mañana: Dra. Martina</span>
-            </span>
+          <div class="gift-box">
+            <span class="bow">🎀</span>
+            <div class="gift-lid"></div>
+            <div class="gift-base"></div>
           </div>
         </div>
       </section>
 
-      <section class="scene scene-final" id="scene-final">
-        <p class="tag reveal">para vos, Marti</p>
-        <h2 class="final-title reveal">Todo va a estar bien.</h2>
-        <div class="message reveal">
-          <p>
-            Sé que estudiar no es fácil: anatomía, bioquímica, prácticas que se comen
-            los fines de semana. Y sé que tu sueño real —ser médica— todavía te queda
-            camino por recorrer. Pero quiero que sepas algo: <strong>vas a llegar</strong>,
-            un paso a la vez.
-          </p>
-          <p>
-            Y mientras tanto, acá estoy yo: para los mates de las 2 AM estudiando, para
-            escucharte repasar en voz alta, para lo que necesites.
-          </p>
-          <p class="signature">Te amo, Marti. — Fran 🖤🩺</p>
-        </div>
-        <button id="reveal-btn" class="btn reveal">un beso más 💋</button>
+      <section class="scene scene-epilogue" id="scene-epilogue">
+        <p class="epilogue-heart reveal">❤️</p>
       </section>
     </main>
 
@@ -119,16 +74,16 @@ const leaves = [
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // --- floating ambient icons (kept subtle: texture, not focus) ---
+      // --- floating ambient icons (subtle texture only) ---
       const floaters = document.querySelectorAll<HTMLElement>('.floater');
 
       floaters.forEach((el) => {
         const startX = Math.random() * 100;
-        const size = 1 + Math.random() * 1.4;
-        const duration = 12 + Math.random() * 16;
+        const size = 1 + Math.random() * 1.3;
+        const duration = 13 + Math.random() * 16;
         const delay = Math.random() * -24;
-        const drift = (Math.random() - 0.5) * 180;
-        const maxOpacity = 0.35 + Math.random() * 0.25;
+        const drift = (Math.random() - 0.5) * 160;
+        const maxOpacity = 0.3 + Math.random() * 0.22;
 
         el.style.left = `${startX}vw`;
         el.style.fontSize = `${size}rem`;
@@ -149,7 +104,7 @@ const leaves = [
         });
 
         gsap.to(el, {
-          rotation: (Math.random() - 0.5) * 50,
+          rotation: (Math.random() - 0.5) * 46,
           duration: 4 + Math.random() * 3,
           repeat: -1,
           yoyo: true,
@@ -167,7 +122,7 @@ const leaves = [
       });
 
       gsap.to('#bg-layer', {
-        yPercent: 12,
+        yPercent: 10,
         ease: 'none',
         scrollTrigger: { start: 0, end: 'max', scrub: true },
       });
@@ -176,9 +131,9 @@ const leaves = [
       const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       introTl
-        .from('#intro-tag', { y: -20, opacity: 0, duration: 0.6 })
-        .from('#intro-title', { y: 30, opacity: 0, duration: 0.9 }, '-=0.2')
-        .from('#intro-sub', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3')
+        .from('#intro-tag', { y: -16, opacity: 0, duration: 0.6 })
+        .from('#intro-title', { y: 26, opacity: 0, duration: 0.9 }, '-=0.2')
+        .from('#intro-sub', { y: 18, opacity: 0, duration: 0.6 }, '-=0.3')
         .from('#intro-cue', { opacity: 0, duration: 0.6 }, '-=0.2');
 
       gsap.to('#intro-cue', {
@@ -189,10 +144,10 @@ const leaves = [
         ease: 'sine.inOut',
       });
 
-      // --- generic scroll reveal for later scenes ---
+      // --- generic scroll reveal ---
       gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
         gsap.from(el, {
-          y: 40,
+          y: 30,
           opacity: 0,
           duration: 0.9,
           ease: 'power3.out',
@@ -204,68 +159,30 @@ const leaves = [
         });
       });
 
-      // --- heartbeat monitor tied to scroll ---
-      const ecgPathEl = document.getElementById('ecg-path') as unknown as SVGPathElement | null;
-      const ecgHeart = document.getElementById('ecg-heart');
+      // --- the gift box that opens into a letter, driven by scroll ---
+      gsap.set('#letter', { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.5, y: 130 });
+      gsap.set('.letter p, .letter .sign, .letter .btn-wrap', { opacity: 0, y: 14 });
 
-      if (ecgPathEl) {
-        const len = ecgPathEl.getTotalLength();
-        gsap.set(ecgPathEl, { strokeDasharray: len, strokeDashoffset: len });
-        gsap.set(ecgHeart, { scale: 0, opacity: 0 });
-
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: '#scene-ecg',
-              start: 'top 70%',
-              end: 'bottom 50%',
-              scrub: 0.4,
-            },
-          })
-          .to(ecgPathEl, { strokeDashoffset: 0, ease: 'none' })
-          .to(ecgHeart, { scale: 1.5, opacity: 1, ease: 'power2.out' }, '-=0.15')
-          .to(ecgHeart, { scale: 1.2, duration: 0.3, ease: 'power1.inOut' });
-      }
-
-      // --- growth path: nutrición -> Dra. Martina, pinned scrollytelling ---
-      const growthPathEl = document.getElementById('growth-path') as unknown as SVGPathElement | null;
-
-      gsap.set('.leaf-inner', { opacity: 0, scale: 0.4 });
-
-      if (growthPathEl) {
-        const glen = growthPathEl.getTotalLength();
-        gsap.set(growthPathEl, { strokeDasharray: glen, strokeDashoffset: glen });
-
-        const growthTl = gsap.timeline({
+      gsap
+        .timeline({
           scrollTrigger: {
-            trigger: '#scene-growth',
+            trigger: '#scene-box',
             start: 'top top',
-            end: '+=140%',
+            end: '+=180%',
             scrub: 0.6,
             pin: true,
           },
-        });
+        })
+        .to('.bow', { scale: 0, opacity: 0, duration: 0.1, ease: 'power1.in' })
+        .to('.gift-lid', { rotateX: -115, y: -12, duration: 0.2, ease: 'power2.out' }, '-=0.02')
+        .to('#letter', { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power3.out' }, '-=0.05')
+        .to(
+          '.letter p, .letter .sign, .letter .btn-wrap',
+          { opacity: 1, y: 0, duration: 0.32, stagger: 0.09 },
+          '-=0.08'
+        );
 
-        growthTl.to(growthPathEl, { strokeDashoffset: 0, duration: 1, ease: 'none' });
-
-        const leafSteps: Array<[string, number]> = [
-          ['#leaf-1 .leaf-inner', 0.08],
-          ['#leaf-2 .leaf-inner', 0.32],
-          ['#leaf-3 .leaf-inner', 0.54],
-          ['#leaf-4 .leaf-inner', 0.76],
-          ['#leaf-5 .leaf-inner', 0.94],
-        ];
-
-        leafSteps.forEach(([selector, pos]) => {
-          growthTl.to(
-            selector,
-            { opacity: 1, scale: 1, duration: 0.1, ease: 'back.out(2)' },
-            pos
-          );
-        });
-      }
-
-      // --- final scene: kiss burst ---
+      // --- kiss burst ---
       const btn = document.getElementById('reveal-btn');
 
       function burst() {
@@ -277,7 +194,7 @@ const leaves = [
           document.body.appendChild(span);
 
           const x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
-          const y = window.innerHeight * 0.6;
+          const y = window.innerHeight * 0.55;
           gsap.set(span, { position: 'fixed', left: x, top: y, fontSize: '1.5rem', zIndex: 50 });
 
           gsap.to(span, {
@@ -384,8 +301,7 @@ const leaves = [
         margin: 0 auto;
       }
 
-      .tag,
-      .scene-label {
+      .tag {
         letter-spacing: 0.3em;
         text-transform: uppercase;
         font-size: 0.75rem;
@@ -393,11 +309,12 @@ const leaves = [
         margin: 0 0 1rem;
       }
 
-      h1,
-      .scene h2 {
-        font-size: clamp(1.9rem, 6.5vw, 3.4rem);
+      h1 {
+        font-size: clamp(2rem, 6.5vw, 3.4rem);
         line-height: 1.15;
         margin: 0 0 1rem;
+        color: var(--accent);
+        text-shadow: 0 0 30px rgba(255, 46, 99, 0.4);
       }
 
       .scene-sub {
@@ -407,78 +324,6 @@ const leaves = [
         margin: 0.5rem auto 0;
       }
 
-      /* intro */
-
-      .scene-intro h1 {
-        color: var(--accent);
-        text-shadow: 0 0 30px rgba(255, 46, 99, 0.45);
-      }
-
-      .glitch {
-        position: relative;
-      }
-
-      .glitch::before,
-      .glitch::after {
-        content: attr(data-text);
-        position: absolute;
-        inset: 0;
-        background: transparent;
-      }
-
-      .glitch::before {
-        left: 3px;
-        color: var(--accent-2);
-        text-shadow: -2px 0 var(--accent-2);
-        animation: glitch-1 3.4s infinite linear alternate-reverse;
-      }
-
-      .glitch::after {
-        left: -3px;
-        color: var(--accent);
-        text-shadow: 2px 0 #ffb238;
-        animation: glitch-2 2.8s infinite linear alternate-reverse;
-      }
-
-      @keyframes glitch-1 {
-        0% {
-          clip-path: inset(10% 0 60% 0);
-        }
-        20% {
-          clip-path: inset(80% 0 2% 0);
-        }
-        40% {
-          clip-path: inset(40% 0 40% 0);
-        }
-        60% {
-          clip-path: inset(10% 0 75% 0);
-        }
-        80% {
-          clip-path: inset(60% 0 15% 0);
-        }
-        100% {
-          clip-path: inset(20% 0 55% 0);
-        }
-      }
-
-      @keyframes glitch-2 {
-        0% {
-          clip-path: inset(70% 0 5% 0);
-        }
-        25% {
-          clip-path: inset(15% 0 65% 0);
-        }
-        50% {
-          clip-path: inset(45% 0 35% 0);
-        }
-        75% {
-          clip-path: inset(5% 0 80% 0);
-        }
-        100% {
-          clip-path: inset(55% 0 20% 0);
-        }
-      }
-
       .scroll-cue {
         margin-top: 2.5rem;
         font-size: 0.85rem;
@@ -486,160 +331,159 @@ const leaves = [
         letter-spacing: 0.1em;
       }
 
-      /* ecg */
+      /* gift box + letter */
 
-      .ecg-wrap {
-        position: relative;
-        width: 100%;
-        max-width: 560px;
-        margin: 1.5rem auto;
-      }
-
-      .ecg {
-        width: 100%;
-        height: auto;
-        overflow: visible;
-      }
-
-      .ecg path {
-        fill: none;
-        stroke: var(--accent);
-        stroke-width: 3;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        filter: drop-shadow(0 0 8px rgba(255, 46, 99, 0.6));
-      }
-
-      .ecg-heart {
-        position: absolute;
-        right: -0.4rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 2rem;
-      }
-
-      /* growth */
-
-      .scene-growth {
+      .scene-box {
         max-width: 100%;
       }
 
-      .growth-wrap {
+      .gift-wrap {
         position: relative;
-        width: min(260px, 70vw);
-        aspect-ratio: 200 / 620;
-        margin: 1rem auto 0;
-      }
-
-      .growth-svg {
         width: 100%;
-        height: 100%;
-        display: block;
-        overflow: visible;
+        max-width: 340px;
+        height: 420px;
+        margin: 0 auto;
+        perspective: 900px;
       }
 
-      .growth-svg path {
-        fill: none;
-        stroke: var(--accent-2);
-        stroke-width: 3;
-        stroke-linecap: round;
-        filter: drop-shadow(0 0 6px rgba(8, 217, 214, 0.45));
-      }
-
-      .leaf {
+      .gift-box {
         position: absolute;
         left: 50%;
-        transform: translate(14px, -50%);
+        bottom: 30px;
+        width: 170px;
+        transform: translateX(-50%);
       }
 
-      .leaf-inner {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        white-space: nowrap;
+      .bow {
+        position: absolute;
+        top: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2.2rem;
+        z-index: 4;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
       }
 
-      .leaf-icon {
-        font-size: 1.6rem;
-        line-height: 1;
+      .gift-lid {
+        position: relative;
+        height: 46px;
+        background: linear-gradient(135deg, #ff6f91, #ff2e63);
+        border-radius: 10px 10px 4px 4px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+        transform-origin: top center;
+        z-index: 3;
       }
 
-      .leaf-label {
-        font-size: 0.8rem;
-        opacity: 0.85;
-        max-width: 190px;
-        white-space: normal;
-        text-align: left;
+      .gift-lid::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 16px;
+        margin-left: -8px;
+        background: rgba(255, 242, 224, 0.85);
       }
 
-      .leaf-blossom {
+      .gift-base {
+        position: relative;
+        height: 110px;
+        margin-top: -4px;
+        background: linear-gradient(135deg, #c9295a, #8a1f42);
+        border-radius: 6px;
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.45);
+        z-index: 1;
+      }
+
+      .gift-base::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 16px;
+        margin-left: -8px;
+        background: rgba(255, 242, 224, 0.3);
+      }
+
+      .letter {
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        width: min(300px, 86vw);
         transform: translate(-50%, -50%);
-      }
-
-      .leaf-blossom .leaf-inner {
-        flex-direction: column;
-        gap: 0.3rem;
-        white-space: normal;
-      }
-
-      .leaf-blossom .leaf-icon {
-        font-size: 2.6rem;
-        filter: drop-shadow(0 0 12px rgba(255, 46, 99, 0.5));
-      }
-
-      .leaf-blossom .leaf-label {
-        color: var(--accent-2);
-        font-weight: bold;
-        text-align: center;
-        white-space: nowrap;
-      }
-
-      /* final */
-
-      .final-title {
-        color: var(--accent-2);
-        text-shadow: 0 0 24px rgba(8, 217, 214, 0.4);
-      }
-
-      .message {
-        margin-top: 1.5rem;
+        background: var(--cream);
+        color: #241033;
+        border-radius: 8px;
+        padding: 1.85rem 1.6rem 1.6rem;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
         text-align: left;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 20px;
-        padding: 1.75rem 2rem;
-        backdrop-filter: blur(6px);
+        z-index: 2;
       }
 
-      .message p {
+      .letter-heart {
+        text-align: center;
+        font-size: 1.3rem;
+        margin: 0 0 0.75rem !important;
+      }
+
+      .letter p {
+        font-size: 0.98rem;
         line-height: 1.6;
-        font-size: 1.05rem;
+        margin: 0 0 0.85rem;
+        font-style: italic;
       }
 
-      .message .signature {
-        margin-top: 1.25rem;
+      .letter .highlight {
+        font-size: 1.2rem;
+        font-weight: bold;
+        font-style: normal;
+        color: var(--accent);
+        text-align: center;
+        margin: 1rem 0;
+      }
+
+      .letter .closing {
+        font-weight: bold;
+      }
+
+      .letter .sign {
         text-align: right;
         font-style: italic;
-        color: var(--accent-2);
+        color: #5b3a72;
+        margin-top: 1rem;
       }
+
+      .letter .btn-wrap {
+        text-align: center;
+        margin-top: 1.4rem;
+      }
+
+      /* epilogue */
+
+      .epilogue-heart {
+        font-size: 2rem;
+        opacity: 0.75;
+      }
+
+      /* button */
 
       .btn {
         font-family: inherit;
-        font-size: 1.05rem;
-        padding: 0.85rem 2rem;
+        font-size: 1.02rem;
+        padding: 0.75rem 1.75rem;
         border-radius: 999px;
         border: 2px solid var(--accent);
-        background: rgba(255, 46, 99, 0.12);
-        color: var(--cream);
+        background: rgba(255, 46, 99, 0.1);
+        color: var(--accent);
         cursor: pointer;
-        margin-top: 2rem;
         transition: background 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 0 20px rgba(255, 46, 99, 0.25);
+        box-shadow: 0 0 16px rgba(255, 46, 99, 0.2);
       }
 
       .btn:hover {
-        background: rgba(255, 46, 99, 0.28);
-        box-shadow: 0 0 32px rgba(255, 46, 99, 0.45);
+        background: rgba(255, 46, 99, 0.22);
+        box-shadow: 0 0 26px rgba(255, 46, 99, 0.4);
       }
 
       @media (max-width: 480px) {
@@ -647,16 +491,12 @@ const leaves = [
           padding: 3rem 1rem;
         }
 
-        .message {
-          padding: 1.25rem 1.25rem;
+        .gift-wrap {
+          height: 400px;
         }
 
-        .growth-wrap {
-          width: min(220px, 78vw);
-        }
-
-        .leaf-label {
-          max-width: 140px;
+        .letter {
+          padding: 1.5rem 1.25rem 1.3rem;
         }
       }
     </style>
