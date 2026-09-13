@@ -1,0 +1,504 @@
+---
+const icons = [
+  '🥑', '🍎', '🥗', '🍓', '🥦', '🫐',
+  '💊', '🩺', '🌹', '🌸', '💕', '❤️', '🌻', '🌷',
+  '👻', '🍕', '🎃', '🦇', '💘',
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fran &amp; Marti</title>
+    <meta
+      name="description"
+      content="Para Martina: una carta para decirle que todo va a estar bien y que la amo."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>"
+    />
+  </head>
+  <body>
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="bg-layer" id="bg-layer"></div>
+
+    <div class="floaters" id="floaters" aria-hidden="true">
+      {icons.map((icon) => (
+        <span class="floater">{icon}</span>
+      ))}
+    </div>
+
+    <main>
+      <section class="scene scene-intro" id="scene-intro">
+        <p class="tag" id="intro-tag">para vos, Marti</p>
+        <h1 id="intro-title">Pará un segundo.</h1>
+        <p class="scene-sub" id="intro-sub">tengo algo para vos.</p>
+        <p class="scroll-cue" id="intro-cue">deslizá despacito ↓</p>
+      </section>
+
+      <section class="scene scene-box" id="scene-box">
+        <div class="gift-wrap" id="gift-wrap">
+          <div class="letter" id="letter">
+            <p class="letter-heart">🖤</p>
+            <p>Marti,</p>
+            <p>Sé que últimamente los días vienen un poco pesados.</p>
+            <p>Quiero que lo tengas clarísimo:</p>
+            <p class="highlight">todo va a estar bien.</p>
+            <p>No hace falta que sea hoy, ni que sea perfecto. Yo voy a estar acá, pase lo que pase.</p>
+            <p class="closing">Te amo, hoy y siempre.</p>
+            <p class="sign">— Fran</p>
+            <div class="btn-wrap">
+              <button id="reveal-btn" class="btn">un beso más 💋</button>
+            </div>
+          </div>
+
+          <div class="gift-box">
+            <span class="bow">🎀</span>
+            <div class="gift-lid"></div>
+            <div class="gift-base"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-epilogue" id="scene-epilogue">
+        <p class="epilogue-heart reveal">❤️</p>
+      </section>
+    </main>
+
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // --- floating ambient icons (subtle texture only) ---
+      const floaters = document.querySelectorAll<HTMLElement>('.floater');
+
+      floaters.forEach((el) => {
+        const startX = Math.random() * 100;
+        const size = 1 + Math.random() * 1.3;
+        const duration = 13 + Math.random() * 16;
+        const delay = Math.random() * -24;
+        const drift = (Math.random() - 0.5) * 160;
+        const maxOpacity = 0.3 + Math.random() * 0.22;
+
+        el.style.left = `${startX}vw`;
+        el.style.fontSize = `${size}rem`;
+
+        gsap.set(el, { y: '110vh', opacity: 0 });
+
+        gsap.to(el, {
+          y: '-10vh',
+          x: `+=${drift}`,
+          opacity: maxOpacity,
+          duration,
+          delay,
+          repeat: -1,
+          ease: 'none',
+          onRepeat: () => {
+            gsap.set(el, { y: '110vh', x: 0 });
+          },
+        });
+
+        gsap.to(el, {
+          rotation: (Math.random() - 0.5) * 46,
+          duration: 4 + Math.random() * 3,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      });
+
+      // --- scroll progress bar + background parallax ---
+      ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: (self) => {
+          gsap.set('#progress-bar', { scaleX: self.progress });
+        },
+      });
+
+      gsap.to('#bg-layer', {
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: { start: 0, end: 'max', scrub: true },
+      });
+
+      // --- intro entrance ---
+      const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      introTl
+        .from('#intro-tag', { y: -16, opacity: 0, duration: 0.6 })
+        .from('#intro-title', { y: 26, opacity: 0, duration: 0.9 }, '-=0.2')
+        .from('#intro-sub', { y: 18, opacity: 0, duration: 0.6 }, '-=0.3')
+        .from('#intro-cue', { opacity: 0, duration: 0.6 }, '-=0.2');
+
+      gsap.to('#intro-cue', {
+        y: 8,
+        duration: 1,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // --- generic scroll reveal ---
+      gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+        gsap.from(el, {
+          y: 30,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      });
+
+      // --- the gift box that opens into a letter, driven by scroll ---
+      gsap.set('#letter', { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.5, y: 130 });
+      gsap.set('.letter p, .letter .sign, .letter .btn-wrap', { opacity: 0, y: 14 });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: '#scene-box',
+            start: 'top top',
+            end: '+=180%',
+            scrub: 0.6,
+            pin: true,
+          },
+        })
+        .to('.bow', { scale: 0, opacity: 0, duration: 0.1, ease: 'power1.in' })
+        .to('.gift-lid', { rotateX: -115, y: -12, duration: 0.2, ease: 'power2.out' }, '-=0.02')
+        .to('#letter', { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power3.out' }, '-=0.05')
+        .to(
+          '.letter p, .letter .sign, .letter .btn-wrap',
+          { opacity: 1, y: 0, duration: 0.32, stagger: 0.09 },
+          '-=0.08'
+        );
+
+      // --- kiss burst ---
+      const btn = document.getElementById('reveal-btn');
+
+      function burst() {
+        const emojis = ['❤️', '💋', '🌹', '🌸', '💕'];
+        for (let i = 0; i < 24; i++) {
+          const span = document.createElement('span');
+          span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          span.className = 'burst-particle';
+          document.body.appendChild(span);
+
+          const x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+          const y = window.innerHeight * 0.55;
+          gsap.set(span, { position: 'fixed', left: x, top: y, fontSize: '1.5rem', zIndex: 50 });
+
+          gsap.to(span, {
+            x: (Math.random() - 0.5) * 500,
+            y: (Math.random() - 0.5) * 400 - 100,
+            rotation: (Math.random() - 0.5) * 360,
+            opacity: 0,
+            duration: 1.4 + Math.random(),
+            ease: 'power2.out',
+            onComplete: () => span.remove(),
+          });
+        }
+      }
+
+      btn?.addEventListener('click', burst);
+    </script>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-a: #120014;
+        --bg-b: #1a0b2e;
+        --accent: #ff2e63;
+        --accent-2: #08d9d6;
+        --cream: #fff2e0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        color: var(--cream);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(90deg, var(--accent-2), var(--accent));
+        transform-origin: left;
+        transform: scaleX(0);
+        z-index: 100;
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: -10% 0;
+        z-index: -2;
+        background: radial-gradient(circle at 20% 20%, #3a0d4d 0%, var(--bg-a) 45%, #05000a 100%);
+      }
+
+      .bg-layer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-radial-gradient(circle at 80% 70%, rgba(8, 217, 214, 0.08) 0, transparent 6%);
+      }
+
+      .floaters {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .floater {
+        position: absolute;
+        top: 0;
+        will-change: transform, opacity;
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.35));
+      }
+
+      main {
+        position: relative;
+      }
+
+      .scene {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 4rem 1.25rem;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .tag {
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: var(--accent-2);
+        margin: 0 0 1rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 6.5vw, 3.4rem);
+        line-height: 1.15;
+        margin: 0 0 1rem;
+        color: var(--accent-2);
+        text-shadow: 0 0 30px rgba(8, 217, 214, 0.4);
+      }
+
+      .scene-sub {
+        font-size: 1.05rem;
+        opacity: 0.85;
+        max-width: 480px;
+        margin: 0.5rem auto 0;
+      }
+
+      .scroll-cue {
+        margin-top: 2.5rem;
+        font-size: 0.85rem;
+        opacity: 0.6;
+        letter-spacing: 0.1em;
+      }
+
+      /* gift box + letter */
+
+      .scene-box {
+        max-width: 100%;
+      }
+
+      .gift-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 340px;
+        height: 420px;
+        margin: 0 auto;
+        perspective: 900px;
+      }
+
+      .gift-box {
+        position: absolute;
+        left: 50%;
+        bottom: 30px;
+        width: 170px;
+        transform: translateX(-50%);
+      }
+
+      .bow {
+        position: absolute;
+        top: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2.2rem;
+        z-index: 4;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+      }
+
+      .gift-lid {
+        position: relative;
+        height: 46px;
+        background: linear-gradient(135deg, #5eead4, #08d9d6);
+        border-radius: 10px 10px 4px 4px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+        transform-origin: top center;
+        z-index: 3;
+      }
+
+      .gift-lid::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 16px;
+        margin-left: -8px;
+        background: rgba(255, 242, 224, 0.85);
+      }
+
+      .gift-base {
+        position: relative;
+        height: 110px;
+        margin-top: -4px;
+        background: linear-gradient(135deg, #0e7490, #164e63);
+        border-radius: 6px;
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.45);
+        z-index: 1;
+      }
+
+      .gift-base::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 16px;
+        margin-left: -8px;
+        background: rgba(255, 242, 224, 0.3);
+      }
+
+      .letter {
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        width: min(300px, 86vw);
+        transform: translate(-50%, -50%);
+        background: var(--cream);
+        color: #241033;
+        border-radius: 8px;
+        padding: 1.85rem 1.6rem 1.6rem;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        text-align: left;
+        z-index: 2;
+      }
+
+      .letter-heart {
+        text-align: center;
+        font-size: 1.3rem;
+        margin: 0 0 0.75rem !important;
+      }
+
+      .letter p {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin: 0 0 0.85rem;
+        font-style: italic;
+      }
+
+      .letter .highlight {
+        font-size: 1.2rem;
+        font-weight: bold;
+        font-style: normal;
+        color: #0e7490;
+        text-align: center;
+        margin: 1rem 0;
+      }
+
+      .letter .closing {
+        font-weight: bold;
+      }
+
+      .letter .sign {
+        text-align: right;
+        font-style: italic;
+        color: #0e7490;
+        margin-top: 1rem;
+      }
+
+      .letter .btn-wrap {
+        text-align: center;
+        margin-top: 1.4rem;
+      }
+
+      /* epilogue */
+
+      .epilogue-heart {
+        font-size: 2rem;
+        opacity: 0.75;
+      }
+
+      /* button */
+
+      .btn {
+        font-family: inherit;
+        font-size: 1.02rem;
+        padding: 0.75rem 1.75rem;
+        border-radius: 999px;
+        border: 2px solid #0e7490;
+        background: rgba(8, 217, 214, 0.12);
+        color: #0e7490;
+        cursor: pointer;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 0 16px rgba(8, 217, 214, 0.25);
+      }
+
+      .btn:hover {
+        background: rgba(8, 217, 214, 0.24);
+        box-shadow: 0 0 26px rgba(8, 217, 214, 0.45);
+      }
+
+      @media (max-width: 480px) {
+        .scene {
+          padding: 3rem 1rem;
+        }
+
+        .gift-wrap {
+          height: 400px;
+        }
+
+        .letter {
+          padding: 1.5rem 1.25rem 1.3rem;
+        }
+      }
+    </style>
+  </body>
+</html>
