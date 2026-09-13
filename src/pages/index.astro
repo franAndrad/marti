@@ -1,0 +1,331 @@
+---
+const icons = [
+  '🎃', '🔪', '👻', '🍕', '🍕', '🩺', '💊', '💉', '🌹', '🌸',
+  '🦇', '🍕', '🩹', '🌻', '🔪', '👻', '💊', '🌷', '🍕', '🎃',
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Para Marti</title>
+    <meta name="description" content="Para Martina: terror, pizza, medicina y mucho cariño." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌹</text></svg>" />
+  </head>
+  <body>
+    <div class="bg-layer"></div>
+
+    <div class="floaters" id="floaters" aria-hidden="true">
+      {icons.map((icon) => (
+        <span class="floater">{icon}</span>
+      ))}
+    </div>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow" id="eyebrow">para vos, Marti</p>
+        <h1 id="title">
+          <span class="word">Terror.</span>
+          <span class="word">Pizza.</span>
+          <span class="word">Medicina.</span>
+        </h1>
+        <p class="subtitle" id="subtitle">
+          la combinación más random del mundo, como la mezcla rara que sos vos y que amo.
+        </p>
+
+        <button id="reveal-btn" class="btn">tocá acá ✨</button>
+
+        <div class="message" id="message">
+          <p>
+            Sé que a veces el estudio, los parciales y el cansancio pesan mucho.
+            Pero quiero que sepas algo, aunque parezca la trama de una peli de terror
+            mala: <strong>todo va a estar bien.</strong>
+          </p>
+          <p>
+            Vas a recibirte, vas a curar gente, y en el medio vamos a seguir
+            viendo pelis que dan miedo, comiendo pizza a la madrugada y
+            riéndonos de todo. Yo estoy acá, para lo que necesites.
+          </p>
+          <p class="signature">Te amo, Marti. — Fran 🖤🍕🩺</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      import { gsap } from 'gsap';
+
+      const floaters = document.querySelectorAll<HTMLElement>('.floater');
+
+      floaters.forEach((el) => {
+        const startX = Math.random() * 100;
+        const size = 1.2 + Math.random() * 1.8;
+        const duration = 10 + Math.random() * 14;
+        const delay = Math.random() * -20;
+        const drift = (Math.random() - 0.5) * 200;
+
+        el.style.left = `${startX}vw`;
+        el.style.fontSize = `${size}rem`;
+
+        gsap.set(el, { y: '110vh', opacity: 0 });
+
+        gsap.to(el, {
+          y: '-10vh',
+          x: `+=${drift}`,
+          opacity: 1,
+          duration,
+          delay,
+          repeat: -1,
+          ease: 'none',
+          onRepeat: () => {
+            gsap.set(el, { y: '110vh', x: 0 });
+          },
+        });
+
+        gsap.to(el, {
+          rotation: (Math.random() - 0.5) * 60,
+          duration: 3 + Math.random() * 3,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      });
+
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl.from('#eyebrow', { y: -20, opacity: 0, duration: 0.6 })
+        .from(
+          '.word',
+          {
+            y: 40,
+            opacity: 0,
+            rotation: -4,
+            duration: 0.8,
+            stagger: 0.15,
+          },
+          '-=0.2'
+        )
+        .from('#subtitle', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3')
+        .from('#reveal-btn', { scale: 0.6, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.2');
+
+      gsap.to('#reveal-btn', {
+        scale: 1.06,
+        duration: 0.9,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      const message = document.getElementById('message');
+      const btn = document.getElementById('reveal-btn');
+      let revealed = false;
+
+      function burst() {
+        const emojis = ['❤️', '🌹', '🌸', '💊', '🍕'];
+        for (let i = 0; i < 24; i++) {
+          const span = document.createElement('span');
+          span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          span.className = 'burst-particle';
+          document.body.appendChild(span);
+
+          const x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+          const y = window.innerHeight * 0.35;
+          gsap.set(span, { position: 'fixed', left: x, top: y, fontSize: '1.5rem', zIndex: 50 });
+
+          gsap.to(span, {
+            x: (Math.random() - 0.5) * 500,
+            y: (Math.random() - 0.5) * 400 - 100,
+            rotation: (Math.random() - 0.5) * 360,
+            opacity: 0,
+            duration: 1.4 + Math.random(),
+            ease: 'power2.out',
+            onComplete: () => span.remove(),
+          });
+        }
+      }
+
+      btn?.addEventListener('click', () => {
+        burst();
+        if (revealed || !message) return;
+        revealed = true;
+        gsap.set(message, { display: 'block', height: 'auto' });
+        gsap.from(message, { height: 0, opacity: 0, duration: 0.6, ease: 'power2.out' });
+        gsap.from(message.querySelectorAll('p'), {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.15,
+          delay: 0.1,
+        });
+        btn.textContent = 'de nuevo 🎉';
+        message.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        gsap.to('.hero', { x, y, duration: 1.2, ease: 'power2.out' });
+      });
+    </script>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-a: #120014;
+        --bg-b: #1a0b2e;
+        --accent: #ff2e63;
+        --accent-2: #08d9d6;
+        --cream: #fff2e0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        color: var(--cream);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: radial-gradient(circle at 20% 20%, #3a0d4d 0%, var(--bg-a) 45%, #05000a 100%);
+      }
+
+      .bg-layer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-radial-gradient(circle at 80% 70%, rgba(8, 217, 214, 0.08) 0, transparent 6%);
+      }
+
+      .floaters {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .floater {
+        position: absolute;
+        top: 0;
+        will-change: transform, opacity;
+        filter: drop-shadow(0 0 6px rgba(255, 46, 99, 0.25));
+      }
+
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem 1.25rem;
+      }
+
+      .hero {
+        max-width: 640px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: var(--accent-2);
+        margin: 0 0 1rem;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 7vw, 4rem);
+        margin: 0 0 1rem;
+        line-height: 1.1;
+      }
+
+      .word {
+        display: inline-block;
+        margin: 0 0.15em;
+      }
+
+      .word:nth-child(1) {
+        color: var(--accent);
+        text-shadow: 0 0 24px rgba(255, 46, 99, 0.5);
+      }
+
+      .word:nth-child(2) {
+        color: #ffb238;
+        text-shadow: 0 0 24px rgba(255, 178, 56, 0.4);
+      }
+
+      .word:nth-child(3) {
+        color: var(--accent-2);
+        text-shadow: 0 0 24px rgba(8, 217, 214, 0.4);
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.85;
+        max-width: 480px;
+        margin: 0 auto 2rem;
+      }
+
+      .btn {
+        font-family: inherit;
+        font-size: 1.05rem;
+        padding: 0.85rem 2rem;
+        border-radius: 999px;
+        border: 2px solid var(--accent);
+        background: rgba(255, 46, 99, 0.12);
+        color: var(--cream);
+        cursor: pointer;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 0 20px rgba(255, 46, 99, 0.25);
+      }
+
+      .btn:hover {
+        background: rgba(255, 46, 99, 0.28);
+        box-shadow: 0 0 32px rgba(255, 46, 99, 0.45);
+      }
+
+      .message {
+        display: none;
+        margin-top: 2.5rem;
+        text-align: left;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 1.75rem 2rem;
+        backdrop-filter: blur(6px);
+      }
+
+      .message p {
+        line-height: 1.6;
+        font-size: 1.05rem;
+      }
+
+      .message .signature {
+        margin-top: 1.25rem;
+        text-align: right;
+        font-style: italic;
+        color: var(--accent-2);
+      }
+
+      @media (max-width: 480px) {
+        .message {
+          padding: 1.25rem 1.25rem;
+        }
+      }
+    </style>
+  </body>
+</html>
